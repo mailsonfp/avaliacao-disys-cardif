@@ -1,11 +1,11 @@
-package com.avaliacao.api.model.input;
+package com.avaliacao.api.model.output;
 
-public class DepartamentoModelInput {
+public class CargoModelOutput {
 	
 	private String codigo;
 	
 	private String nome;
-	
+
 	public String getCodigo() {
 		return codigo;
 	}

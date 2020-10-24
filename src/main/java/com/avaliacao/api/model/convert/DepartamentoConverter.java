@@ -29,5 +29,10 @@ public class DepartamentoConverter {
 	
 	public Departamento toDomainObject(DepartamentoModelInput departamentoInput) {
 		 return modelMapper.map(departamentoInput, Departamento.class);
-	 }
+	}
+	
+	public void copyToDomainObject(DepartamentoModelInput departamentoInput, Departamento departamento) {		 
+		 departamento.setNome(departamentoInput.getNome());
+	}
+	
 }

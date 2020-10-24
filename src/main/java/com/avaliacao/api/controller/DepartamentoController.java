@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -47,9 +48,19 @@ public class DepartamentoController {
 		return departamentoConverter.toModel(departamentoService.salvar(dep));
 	}
 	
+	@PutMapping("{codigoDepartamento}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public DepartamentoModelOutput adicionar(@PathVariable String codigoDepartamento, @RequestBody DepartamentoModelInput departamentoInput) {
+		Departamento dep = departamentoService.buscarPorCodigo(codigoDepartamento);
+		departamentoConverter.copyToDomainObject(departamentoInput, dep);
+				
+		return departamentoConverter.toModel(departamentoService.salvar(dep));
+	}
+	
 	@DeleteMapping("{codigoDepartamento}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void excluir(@PathVariable String codigoDepartamento){
 		departamentoService.excluir(codigoDepartamento);
 	}
+	
 }
