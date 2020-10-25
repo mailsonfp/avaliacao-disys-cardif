@@ -19,7 +19,7 @@ public class Cargo {
 	
 	@Column(name = "cargo_name")
 	private String nome;
-	
+		
 	public Cargo() {
 		
 	}

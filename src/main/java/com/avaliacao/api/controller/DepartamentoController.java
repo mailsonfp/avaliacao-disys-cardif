@@ -2,6 +2,8 @@ package com.avaliacao.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,7 +44,7 @@ public class DepartamentoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public DepartamentoModelOutput adicionar(@RequestBody DepartamentoModelInput departamentoInput) {
+	public DepartamentoModelOutput adicionar(@Valid @RequestBody DepartamentoModelInput departamentoInput) {
 		Departamento dep = departamentoConverter.toDomainObject(departamentoInput);
 				
 		return departamentoConverter.toModel(departamentoService.salvar(dep));
@@ -50,7 +52,7 @@ public class DepartamentoController {
 	
 	@PutMapping("{codigoDepartamento}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public DepartamentoModelOutput adicionar(@PathVariable String codigoDepartamento, @RequestBody DepartamentoModelInput departamentoInput) {
+	public DepartamentoModelOutput adicionar(@PathVariable String codigoDepartamento, @Valid @RequestBody DepartamentoModelInput departamentoInput) {
 		Departamento dep = departamentoService.buscarPorCodigo(codigoDepartamento);
 		departamentoConverter.copyToDomainObject(departamentoInput, dep);
 				

@@ -1,6 +1,8 @@
 package com.avaliacao.domain.model;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Funcionario {
@@ -18,11 +22,14 @@ public class Funcionario {
 	@Column(name = "funcionario_id")
 	private Integer id;
 	
+	@Column(name = "funcionario_codigo")
+	private String codigo;
+	
 	@Column(name = "funcionario_name")
 	private String nome;
 	
 	@Column(name = "funcionario_age")
-	private Integer age;
+	private Integer idade;
 	
 	@Column(name = "funcionario_birthday")
 	private Date dataNascimento;
@@ -30,18 +37,22 @@ public class Funcionario {
 	@Column(name = "funcionario_document")
 	private String documento;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "cargo_id")
 	private Cargo cargo;
+	
+	@ManyToMany
+	@JoinTable(name = "funcionario_departamento", joinColumns = @JoinColumn(name =  "funcionario_id"), inverseJoinColumns = @JoinColumn(name = "departamento_id") )
+	private Set<Departamento> departamentos = new HashSet<>();
 	
 	public Funcionario() {
 		
 	}
 
-	public Funcionario(String nome, Integer age, Date dataNascimento, String documento, Cargo cargo) {
-		super();
+	public Funcionario(String codigo, String nome, Integer idade, Date dataNascimento, String documento, Cargo cargo) {
+		this.codigo = codigo;
 		this.nome = nome;
-		this.age = age;
+		this.idade = idade;
 		this.dataNascimento = dataNascimento;
 		this.documento = documento;
 		this.cargo = cargo;
@@ -55,6 +66,14 @@ public class Funcionario {
 		this.id = id;
 	}
 
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -63,12 +82,12 @@ public class Funcionario {
 		this.nome = nome;
 	}
 
-	public Integer getAge() {
-		return age;
+	public Integer getIdade() {
+		return idade;
 	}
 
-	public void setAge(Integer age) {
-		this.age = age;
+	public void setIdade(Integer age) {
+		this.idade = age;
 	}
 
 	public Date getDataNascimento() {
@@ -95,6 +114,22 @@ public class Funcionario {
 		this.cargo = cargo;
 	}
 
+	public Set<Departamento> getDepartamentos() {
+		return departamentos;
+	}
+
+	public void setDepartamentos(Set<Departamento> departamentos) {
+		this.departamentos = departamentos;
+	}
+	
+	public boolean adicionaDepartamento(Departamento departamento) {
+		return getDepartamentos().add(departamento);
+	}
+	
+	public boolean removerDepartamento(Departamento departamento) {
+		return getDepartamentos().remove(departamento);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

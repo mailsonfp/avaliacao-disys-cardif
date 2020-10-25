@@ -4,8 +4,8 @@ public class DepartamentoNaoEncontradaException extends EntidadeNaoEncontradaExc
 	
 	private static final long serialVersionUID = 1L;
 	
-	public DepartamentoNaoEncontradaException(String codigoSubEstacao) {
-		super(String.format("Não foi possível localizar um Departamento com o código: %s", codigoSubEstacao));
+	public DepartamentoNaoEncontradaException(String codigoDepartamento) {
+		super(String.format("Não foi possível localizar um Departamento com o código: %s", codigoDepartamento));
 	}
 
 

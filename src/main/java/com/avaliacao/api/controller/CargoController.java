@@ -2,6 +2,8 @@ package com.avaliacao.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,7 +44,7 @@ public class CargoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CargoModelOutput adicionar(@RequestBody CargoModelInput cargoInput) {
+	public CargoModelOutput adicionar(@Valid @RequestBody CargoModelInput cargoInput) {
 		Cargo cargo = cargoConverter.toDomainObject(cargoInput);
 				
 		return cargoConverter.toModel(cargoService.salvar(cargo));
@@ -50,7 +52,7 @@ public class CargoController {
 	
 	@PutMapping("{codigoCargo}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CargoModelOutput adicionar(@PathVariable String codigoCargo, @RequestBody CargoModelInput cargoInput) {
+	public CargoModelOutput adicionar(@PathVariable String codigoCargo, @Valid @RequestBody CargoModelInput cargoInput) {
 		Cargo cargo = cargoService.buscarPorCodigo(codigoCargo);
 		cargoConverter.copyToDomainObject(cargoInput, cargo);
 				

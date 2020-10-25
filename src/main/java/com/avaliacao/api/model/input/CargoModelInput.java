@@ -1,9 +1,13 @@
 package com.avaliacao.api.model.input;
 
+import javax.validation.constraints.NotBlank;
+
 public class CargoModelInput {
 	
+	@NotBlank
 	private String codigo;
 	
+	@NotBlank
 	private String nome;
 
 	public String getCodigo() {

@@ -50,7 +50,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 				ProblemType.RECURSO_NAO_ENCONTRADO.getTitle(),
 				String.format("O recurso %s não existe.", ex.getRequestURL()),
 				"A url solicitada não existe");
-	    System.out.println("Passou pelo handleNoHandlerFoundException");
+	    
 	    return handleExceptionInternal(ex, problema, headers, status, request);
 	}
 	
@@ -68,20 +68,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
 	}
 	
-	@ExceptionHandler(NegocioException.class)
-	public ResponseEntity<?> handleNegocioException(NegocioException ex, WebRequest request){
-		HttpStatus status = HttpStatus.BAD_REQUEST;
-		
-		Problema problema = new Problema(
-					status.value(),
-					ProblemType.ERRO_NEGOCIO.getUri(),
-					ProblemType.ERRO_NEGOCIO.getTitle(),
-					ex.getMessage(),
-					ex.getMessage());
-		
-		return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
-	}
-	
 	@ExceptionHandler(EntidadeEmUsoException.class)
 	public ResponseEntity<?> handleEntidadeEmUsoException(EntidadeEmUsoException ex, WebRequest request){
 		HttpStatus status = HttpStatus.CONFLICT;
@@ -96,7 +82,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
 	}
 	
-
+	@ExceptionHandler(NegocioException.class)
+	public ResponseEntity<?> handleNegocioException(NegocioException ex, WebRequest request){
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		
+		Problema problema = new Problema(
+					status.value(),
+					ProblemType.ERRO_NEGOCIO.getUri(),
+					ProblemType.ERRO_NEGOCIO.getTitle(),
+					ex.getMessage(),
+					ex.getMessage());
+		
+		return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
+	}
+	
 	@Override
 	protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {

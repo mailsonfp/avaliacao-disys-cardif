@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.avaliacao.domain.exception.DepartamentoNaoEncontradaException;
+import com.avaliacao.domain.exception.EntidadeEmUsoException;
+import com.avaliacao.domain.exception.NegocioException;
 import com.avaliacao.domain.model.Departamento;
 import com.avaliacao.domain.repository.DepartamentoRepository;
 
@@ -31,13 +34,24 @@ public class DepartamentoService {
 	
 	@Transactional
 	public Departamento salvar(Departamento departamento) {
+		Optional<Departamento> depExistente = departamentoRepository.findByCodigo(departamento.getCodigo());
+		if(depExistente.isPresent()) {
+			throw new NegocioException(String.format("O código '%s' já foi cadastrado para o Departamento '%s'.",depExistente.get().getCodigo(), depExistente.get().getNome()));
+		}
 		return departamentoRepository.save(departamento);
 	}
 	
 	@Transactional
 	public void excluir(String codigoDepartamento) {
 		Departamento dep = buscarPorCodigo(codigoDepartamento);
-		departamentoRepository.deleteById(dep.getId());
+		
+		try {
+			departamentoRepository.deleteById(dep.getId());
+			departamentoRepository.flush();
+			
+		} catch (DataIntegrityViolationException e) {
+			throw new EntidadeEmUsoException(String.format("Não é possível excluit o Departamento %s porque ele está relacionado a um ou mais funcionários", codigoDepartamento));
+		}
 	}
 	
 	@Transactional
