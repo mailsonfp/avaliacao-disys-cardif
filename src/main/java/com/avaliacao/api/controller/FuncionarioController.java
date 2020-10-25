@@ -64,10 +64,8 @@ public class FuncionarioController {
 	@PutMapping("{codigoFuncionario}")
 	@ResponseStatus(HttpStatus.OK)
 	public FuncionarioModelOutput atualizar(@PathVariable String codigoFuncionario, @Valid @RequestBody FuncionarioModelInput funcionarioInput) {
-		
 		Funcionario fun = funcionarioService.buscarPorCodigo(codigoFuncionario);
-		
-
+	
 		funcionarioConverter.copyToDomainObject(funcionarioInput, fun);
 
 		return funcionarioConverter.toModel(funcionarioService.salvar(fun));
@@ -94,7 +92,7 @@ public class FuncionarioController {
 	
 	@DeleteMapping("{codigoFuncionario}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void excluir(@PathVariable String codigoDepartamento){
-		funcionarioService.excluir(codigoDepartamento);
+	public void excluir(@PathVariable String codigoFuncionario){
+		funcionarioService.excluir(codigoFuncionario);
 	}
 }

@@ -43,7 +43,8 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 				.ignoredParameterTypes(ServletRequest.class)
 				.apiInfo(getApiInfo())
 				.tags(
-					new Tag("Departamentos", "Endpoint responsável por armazenar as operações relativas aos departamentos"));
+					new Tag("Departamentos", "Endpoint responsável por armazenar as operações relativas aos departamentos"),
+					new Tag("Cargos", "Endpoint responsável por armazenar as operações relativas aos cargos"));
 	}
 	
 	private List<ResponseMessage> getGlobalResponseMessage(){

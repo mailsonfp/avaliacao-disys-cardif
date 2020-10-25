@@ -40,11 +40,13 @@ public class FuncionarioService {
 	
 	@Transactional
 	public Funcionario salvar(Funcionario funcionario) {
-		Optional<Funcionario> funExistente = funcionarioRepository.findByCodigo(funcionario.getCodigo());
-		if(funExistente.isPresent()) {
-			throw new NegocioException(String.format("O código '%s' já foi cadastrado para o Funcionário '%s'.",funExistente.get().getCodigo(), funExistente.get().getNome()));
+		if(funcionario.getId()==null) {
+			Optional<Funcionario> funExistente = funcionarioRepository.findByCodigo(funcionario.getCodigo());
+			if(funExistente.isPresent()) {
+				throw new NegocioException(String.format("O código '%s' já foi cadastrado para o Funcionário '%s'.",funExistente.get().getCodigo(), funExistente.get().getNome()));
+			}
 		}
-								
+		
 		return funcionarioRepository.save(funcionario);
 	}
 	
@@ -57,8 +59,8 @@ public class FuncionarioService {
 	
 	@Transactional
 	public void excluir(String codigoFuncionario) {
-		Funcionario dep = buscarPorCodigo(codigoFuncionario);
-		funcionarioRepository.deleteById(dep.getId());
+		Funcionario fun = buscarPorCodigo(codigoFuncionario);
+		funcionarioRepository.deleteById(fun.getId());
 	}
 	
 	@Transactional

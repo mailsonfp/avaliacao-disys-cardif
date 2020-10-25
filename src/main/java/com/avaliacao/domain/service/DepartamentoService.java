@@ -38,10 +38,13 @@ public class DepartamentoService {
 	
 	@Transactional
 	public Departamento salvar(Departamento departamento) {
-		Optional<Departamento> depExistente = departamentoRepository.findByCodigo(departamento.getCodigo());
-		if(depExistente.isPresent()) {
-			throw new NegocioException(String.format("O código '%s' já foi cadastrado para o Departamento '%s'.",depExistente.get().getCodigo(), depExistente.get().getNome()));
+		if(departamento.getId()==null) {
+			Optional<Departamento> depExistente = departamentoRepository.findByCodigo(departamento.getCodigo());
+			if(depExistente.isPresent()) {
+				throw new NegocioException(String.format("O código '%s' já foi cadastrado para o Departamento '%s'.",depExistente.get().getCodigo(), depExistente.get().getNome()));
+			}
 		}
+		
 		return departamentoRepository.save(departamento);
 	}
 	
