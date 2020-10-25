@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.avaliacao.domain.exception.DepartamentoNaoEncontradaException;
 import com.avaliacao.domain.exception.EntidadeEmUsoException;
 import com.avaliacao.domain.exception.NegocioException;
+import com.avaliacao.domain.model.Cargo;
 import com.avaliacao.domain.model.Departamento;
 import com.avaliacao.domain.repository.DepartamentoRepository;
 
@@ -19,6 +20,9 @@ public class DepartamentoService {
 	
 	@Autowired
 	private DepartamentoRepository departamentoRepository;
+	
+	@Autowired
+	private CargoService cargoService;
 	
 	public List<Departamento> listar(){
 		return departamentoRepository.findAll();
@@ -58,4 +62,12 @@ public class DepartamentoService {
 	public void salvarTodos(List<Departamento> listaDepartamentos) {
 		departamentoRepository.saveAll(listaDepartamentos);
 	}	
+	
+	@Transactional
+	public void definirChefeDepartamento(String codigoDepartamento, String codigoCargo) {
+		Departamento dep = buscarPorCodigo(codigoDepartamento);
+		Cargo cargo = cargoService.buscarPorCodigo(codigoCargo);
+		
+		dep.setChefeDepartamento(cargo);
+	}
 }

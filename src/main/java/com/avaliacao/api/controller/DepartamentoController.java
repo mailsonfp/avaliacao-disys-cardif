@@ -52,7 +52,7 @@ public class DepartamentoController {
 	
 	@PutMapping("{codigoDepartamento}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public DepartamentoModelOutput adicionar(@PathVariable String codigoDepartamento, @Valid @RequestBody DepartamentoModelInput departamentoInput) {
+	public DepartamentoModelOutput atualizar(@PathVariable String codigoDepartamento, @Valid @RequestBody DepartamentoModelInput departamentoInput) {
 		Departamento dep = departamentoService.buscarPorCodigo(codigoDepartamento);
 		departamentoConverter.copyToDomainObject(departamentoInput, dep);
 				
@@ -63,6 +63,12 @@ public class DepartamentoController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void excluir(@PathVariable String codigoDepartamento){
 		departamentoService.excluir(codigoDepartamento);
+	}
+	
+	@PutMapping("/{codigoDepartamento}/define-chefe/{codigoCargo}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void defineChefeDepartamento(@PathVariable String codigoDepartamento, @PathVariable String codigoCargo) {				
+		departamentoService.definirChefeDepartamento(codigoDepartamento, codigoCargo);
 	}
 	
 }

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Departamento {
@@ -19,6 +21,10 @@ public class Departamento {
 	
 	@Column(name = "departamento_name")
 	private String nome;
+	
+	@OneToOne
+	@JoinColumn(name = "departamento_id_cargo_chefe")
+	private Cargo chefeDepartamento;
 	
 	public Departamento() {		
 	}
@@ -50,6 +56,14 @@ public class Departamento {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Cargo getChefeDepartamento() {
+		return chefeDepartamento;
+	}
+
+	public void setChefeDepartamento(Cargo chefeDepartamento) {
+		this.chefeDepartamento = chefeDepartamento;
 	}
 
 	@Override

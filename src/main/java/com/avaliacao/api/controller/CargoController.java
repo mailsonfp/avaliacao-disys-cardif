@@ -52,7 +52,7 @@ public class CargoController {
 	
 	@PutMapping("{codigoCargo}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CargoModelOutput adicionar(@PathVariable String codigoCargo, @Valid @RequestBody CargoModelInput cargoInput) {
+	public CargoModelOutput atualizar(@PathVariable String codigoCargo, @Valid @RequestBody CargoModelInput cargoInput) {
 		Cargo cargo = cargoService.buscarPorCodigo(codigoCargo);
 		cargoConverter.copyToDomainObject(cargoInput, cargo);
 				

@@ -5,7 +5,9 @@ public class DepartamentoModelOutput {
 	private String codigo;
 	
 	private String nome;
-
+	
+	private CargoModelOutput chefeDepartamento;
+	
 	public String getCodigo() {
 		return codigo;
 	}
@@ -20,6 +22,14 @@ public class DepartamentoModelOutput {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public CargoModelOutput getChefeDepartamento() {
+		return chefeDepartamento;
+	}
+
+	public void setChefeDepartamento(CargoModelOutput chefeDepartamento) {
+		this.chefeDepartamento = chefeDepartamento;
 	}
 		
 }
