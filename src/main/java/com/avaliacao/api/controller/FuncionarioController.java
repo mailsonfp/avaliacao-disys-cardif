@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.avaliacao.api.model.convert.FuncionarioConverter;
 import com.avaliacao.api.model.input.FuncionarioModelInput;
 import com.avaliacao.api.model.output.FuncionarioModelOutput;
+import com.avaliacao.api.openapi.controller.FuncionarioControllerOpenApi;
 import com.avaliacao.domain.model.Cargo;
 import com.avaliacao.domain.model.Funcionario;
 import com.avaliacao.domain.service.CargoService;
@@ -26,7 +27,7 @@ import com.avaliacao.domain.service.FuncionarioService;
 
 @RestController
 @RequestMapping(path = "/funcionarios")
-public class FuncionarioController {
+public class FuncionarioController implements FuncionarioControllerOpenApi {
 	
 	@Autowired
 	private FuncionarioService funcionarioService;
@@ -37,21 +38,25 @@ public class FuncionarioController {
 	@Autowired
 	private CargoService cargoService;
 	
+	@Override
 	@GetMapping
 	public List<FuncionarioModelOutput> listar(){
 		return funcionarioConverter.toCollectionModel(funcionarioService.listar());
 	}
 	
+	@Override
 	@GetMapping("{codigoFuncionario}")
 	public FuncionarioModelOutput buscarPorCodigo(@PathVariable String codigoFuncionario) {
 		return funcionarioConverter.toModel(funcionarioService.buscarPorCodigo(codigoFuncionario));
 	}
 	
+	@Override
 	@GetMapping("/por-departamento/{codigoDepartamento}")
 	public List<FuncionarioModelOutput> listarPorDepartamento(@PathVariable String codigoDepartamento) {
 		return funcionarioConverter.toCollectionModel(funcionarioService.listarPorDepartamentos(codigoDepartamento));
 	}
 	
+	@Override
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public FuncionarioModelOutput adicionar(@Valid @RequestBody FuncionarioModelInput funcionarioInput) {				
@@ -61,18 +66,18 @@ public class FuncionarioController {
 		return funcionarioConverter.toModel(funcionarioService.salvar(fun));			
 	}
 	
+	@Override
 	@PutMapping("{codigoFuncionario}")
 	@ResponseStatus(HttpStatus.OK)
 	public FuncionarioModelOutput atualizar(@PathVariable String codigoFuncionario, @Valid @RequestBody FuncionarioModelInput funcionarioInput) {
-		
 		Funcionario fun = funcionarioService.buscarPorCodigo(codigoFuncionario);
-		
-
+	
 		funcionarioConverter.copyToDomainObject(funcionarioInput, fun);
 
 		return funcionarioConverter.toModel(funcionarioService.salvar(fun));
 	}
 	
+	@Override
 	@PutMapping("/{codigoFuncionario}/atualiza-cargo/{codigoCargo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public FuncionarioModelOutput atualizarCargo(@PathVariable String codigoFuncionario, @PathVariable String codigoCargo) {		
@@ -92,9 +97,10 @@ public class FuncionarioController {
 		return 0;
 	}	
 	
+	@Override
 	@DeleteMapping("{codigoFuncionario}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void excluir(@PathVariable String codigoDepartamento){
-		funcionarioService.excluir(codigoDepartamento);
+	public void excluir(@PathVariable String codigoFuncionario){
+		funcionarioService.excluir(codigoFuncionario);
 	}
 }

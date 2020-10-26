@@ -34,10 +34,13 @@ public class CargoService {
 	
 	@Transactional
 	public Cargo salvar(Cargo cargo) {
-		Optional<Cargo> cargoExistente = cargoRepository.findByCodigo(cargo.getCodigo());
-		if(cargoExistente.isPresent()) {
-			throw new NegocioException(String.format("O código '%s' já foi cadastrado para o Departamento '%s'.",cargoExistente.get().getCodigo(), cargoExistente.get().getNome()));
+		if(cargo.getId()==null) {
+			Optional<Cargo> cargoExistente = cargoRepository.findByCodigo(cargo.getCodigo());
+			if(cargoExistente.isPresent()) {
+				throw new NegocioException(String.format("O código '%s' já foi cadastrado para o Departamento '%s'.",cargoExistente.get().getCodigo(), cargoExistente.get().getNome()));
+			}
 		}
+		
 		return cargoRepository.save(cargo);
 	}
 	
@@ -49,7 +52,7 @@ public class CargoService {
 			cargoRepository.deleteById(cargo.getId());
 			cargoRepository.flush();
 		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoException(String.format("Não é possível excluir o Cargo %s porque ele está relacionado a um ou mais funcionários", codigoCargo));
+			throw new EntidadeEmUsoException(String.format("Não é possível excluir o Cargo %s porque ele está relacionado a uma ou mais entidades", codigoCargo));
 		}
 	}
 	

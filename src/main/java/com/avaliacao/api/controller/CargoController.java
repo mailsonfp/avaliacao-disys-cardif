@@ -19,29 +19,32 @@ import org.springframework.web.bind.annotation.RestController;
 import com.avaliacao.api.model.convert.CargoConverter;
 import com.avaliacao.api.model.input.CargoModelInput;
 import com.avaliacao.api.model.output.CargoModelOutput;
+import com.avaliacao.api.openapi.controller.CargoControllerOpenApi;
 import com.avaliacao.domain.model.Cargo;
 import com.avaliacao.domain.service.CargoService;
 
 @RestController
 @RequestMapping(path = "/cargos")
-public class CargoController {
-	
+public class CargoController implements CargoControllerOpenApi {
 	@Autowired
 	private CargoService cargoService;
 	
 	@Autowired
 	private CargoConverter cargoConverter;
 	
+	@Override
 	@GetMapping
 	public List<CargoModelOutput> listar(){
 		return cargoConverter.toCollectionModel(cargoService.listar());
 	}
 	
+	@Override
 	@GetMapping("{codigoCargo}")
 	public CargoModelOutput buscar(@PathVariable String codigoCargo) {
 		return cargoConverter.toModel(cargoService.buscarPorCodigo(codigoCargo));
 	}
 	
+	@Override
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public CargoModelOutput adicionar(@Valid @RequestBody CargoModelInput cargoInput) {
@@ -50,6 +53,7 @@ public class CargoController {
 		return cargoConverter.toModel(cargoService.salvar(cargo));
 	}
 	
+	@Override
 	@PutMapping("{codigoCargo}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CargoModelOutput atualizar(@PathVariable String codigoCargo, @Valid @RequestBody CargoModelInput cargoInput) {
@@ -59,6 +63,7 @@ public class CargoController {
 		return cargoConverter.toModel(cargoService.salvar(cargo));
 	}
 	
+	@Override
 	@DeleteMapping("{codigocargo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void excluir(@PathVariable String codigocargo){

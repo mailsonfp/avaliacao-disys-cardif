@@ -6,37 +6,40 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @JsonInclude(Include.NON_EMPTY)
 public class Problema {
 	
-	//@ApiModelProperty(example="404", position = 1)
+	@ApiModelProperty(example="404", position = 1)
 	private Integer status;
 	
-	//@ApiModelProperty(example="https://algafood.com.br/recurso-nao-encontrado", position = 11)
+	@ApiModelProperty(example="https://avaliacao-disys-cardif.com.br", position = 11)
 	private String type;
 	
-	//@ApiModelProperty(example="Recurso não encontrado", position = 21)
+	@ApiModelProperty(example="Recurso não encontrado", position = 21)
 	private String title;	
 	
-	//@ApiModelProperty(example="Não foi possível localizar uma cidade com o código: 4", position = 31)
+	@ApiModelProperty(example="Não foi possível localizar um Departamento com o código: DEP01", position = 31)
 	private String detail;
 	
-	//@ApiModelProperty(example="Não foi possível localizar uma cidade com o código: 4", position = 41)
+	@ApiModelProperty(example="Não foi possível localizar um Departamento com o código: DEP01", position = 41)
 	private String userMessage;
 	
-	//@ApiModelProperty(example="2020-07-20T01:51:36.3619628Z", position = 51)
+	@ApiModelProperty(example="2020-07-20T01:51:36.3619628Z", position = 51)
 	private OffsetDateTime timeStamp;
 	
-	//@ApiModelProperty(value="Quando houver, retorna uma lista de objetos ou campos que geraram erro", position = 61)
+	@ApiModelProperty(value="Quando houver, retorna uma lista de objetos ou campos que geraram erro", position = 61)
 	private List<ProblemaObjects> objects;
 	
-	//@ApiModel("Problema-objetos")
+	@ApiModel("Problema-objetos")
 	public static class ProblemaObjects {
 		
-		//@ApiModelProperty(example = "nome", position = 71)
+		@ApiModelProperty(example = "nome", position = 71)
 		private String fieldName;
 		
-		//@ApiModelProperty(example = "é um informação obrigatória", position = 81)
+		@ApiModelProperty(example = "é um informação obrigatória", position = 81)
 		private String fieldUserMessage;
 		
 		public ProblemaObjects(String fieldName, String fieldUserMessage) {

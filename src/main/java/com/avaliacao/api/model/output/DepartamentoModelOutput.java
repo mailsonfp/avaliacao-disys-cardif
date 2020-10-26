@@ -1,11 +1,16 @@
 package com.avaliacao.api.model.output;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class DepartamentoModelOutput {
 	
+	@ApiModelProperty(value = "Código do Departamento", example = "DEP01")
 	private String codigo;
 	
+	@ApiModelProperty(value = "Nome do Departamento", example = "Departamento 01")
 	private String nome;
 	
+	@ApiModelProperty(value = "Código do Departamento", example = "Chefe de Departamento")
 	private CargoModelOutput chefeDepartamento;
 	
 	public String getCodigo() {
