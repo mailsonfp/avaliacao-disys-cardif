@@ -12,7 +12,7 @@ public class DepartamentoModelInput {
 	@Size(min = 3, max = 10)
 	private String codigo;
 	
-	@ApiModelProperty(example="Departament0 01", required = true)
+	@ApiModelProperty(example="Departamento 01", required = true)
 	@NotBlank
 	private String nome;
 	

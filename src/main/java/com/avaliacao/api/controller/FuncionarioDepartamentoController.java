@@ -12,17 +12,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.avaliacao.api.openapi.controller.FuncionarioDepartamentoControllerOpenApi;
 import com.avaliacao.domain.model.Departamento;
 import com.avaliacao.domain.model.Funcionario;
 import com.avaliacao.domain.service.FuncionarioService;
 
 @RestController
 @RequestMapping("/funcionarios/{codigoFuncionario}/departamentos")
-public class FuncionarioDepartamentoController {
+public class FuncionarioDepartamentoController implements FuncionarioDepartamentoControllerOpenApi {
 	
 	@Autowired
 	private FuncionarioService funcionarioService;
 	
+	@Override
 	@GetMapping
 	public Set<Departamento> listar(@PathVariable String codigoFuncionario){
 		Funcionario funcionario = funcionarioService.buscarPorCodigo(codigoFuncionario);
@@ -30,12 +32,14 @@ public class FuncionarioDepartamentoController {
 		return funcionario.getDepartamentos();
 	}
 	
+	@Override
 	@PutMapping("/{codigoDepartamento}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void vincularDepartamento(@PathVariable String codigoFuncionario, @PathVariable String codigoDepartamento) {
 		funcionarioService.vincularDepartamento(codigoFuncionario,codigoDepartamento);
 	}
 	
+	@Override
 	@DeleteMapping("/{codigoDepartamento}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void desvincularDepartamento(@PathVariable String codigoFuncionario, @PathVariable String codigoDepartamento) {

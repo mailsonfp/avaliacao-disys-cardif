@@ -26,7 +26,6 @@ import com.avaliacao.domain.service.CargoService;
 @RestController
 @RequestMapping(path = "/cargos")
 public class CargoController implements CargoControllerOpenApi {
-	
 	@Autowired
 	private CargoService cargoService;
 	

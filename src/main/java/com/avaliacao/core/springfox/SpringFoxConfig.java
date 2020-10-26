@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.avaliacao.api.model.output.CargoModelOutput;
+import com.avaliacao.api.model.output.DepartamentoModelOutput;
+import com.avaliacao.domain.model.Cargo;
+import com.avaliacao.domain.model.Departamento;
+
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
@@ -39,12 +44,15 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 				.globalResponseMessage(RequestMethod.POST, getGlobalPostPutResponseMessages())
 				.globalResponseMessage(RequestMethod.PUT, getGlobalPostPutResponseMessages())
 				.globalResponseMessage(RequestMethod.DELETE, getGlobalDeleteResponseMessages())
+				.directModelSubstitute(Cargo.class, CargoModelOutput.class)			
+				.directModelSubstitute(Departamento.class, DepartamentoModelOutput.class)
 				.useDefaultResponseMessages(false)
 				.ignoredParameterTypes(ServletRequest.class)
 				.apiInfo(getApiInfo())
 				.tags(
 					new Tag("Departamentos", "Endpoint responsável por armazenar as operações relativas aos departamentos"),
-					new Tag("Cargos", "Endpoint responsável por armazenar as operações relativas aos cargos"));
+					new Tag("Cargos", "Endpoint responsável por armazenar as operações relativas aos cargos"),
+					new Tag("Funcionários", "Endpoint responsável por armazenar as operações relativas aos funcionários"));
 	}
 	
 	private List<ResponseMessage> getGlobalResponseMessage(){
