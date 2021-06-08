@@ -72,7 +72,7 @@ public class DepartamentoController implements DepartamentoControllerOpenApi {
 	}
 	
 	@Override
-	@PutMapping("/{codigoDepartamento}/define-chefe/{codigoCargo}")
+	@PutMapping("/{codigoDepartamento}/chefe/{codigoCargo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void defineChefeDepartamento(@PathVariable String codigoDepartamento, @PathVariable String codigoCargo) {				
 		departamentoService.definirChefeDepartamento(codigoDepartamento, codigoCargo);

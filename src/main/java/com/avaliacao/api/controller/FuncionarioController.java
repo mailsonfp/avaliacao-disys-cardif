@@ -78,7 +78,7 @@ public class FuncionarioController implements FuncionarioControllerOpenApi {
 	}
 	
 	@Override
-	@PutMapping("/{codigoFuncionario}/atualiza-cargo/{codigoCargo}")
+	@PutMapping("/{codigoFuncionario}/cargo/{codigoCargo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public FuncionarioModelOutput atualizarCargo(@PathVariable String codigoFuncionario, @PathVariable String codigoCargo) {		
 		Funcionario fun = funcionarioService.buscarPorCodigo(codigoFuncionario);
